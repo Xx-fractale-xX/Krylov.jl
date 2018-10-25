@@ -11,7 +11,7 @@
 # Alexis Montoison, <alexis.montoison@polymtl.ca>
 # Montreal, September 2018.
 
-export diom
+export diom_lu
 
 """Solve the consistent linear system Ax = b using direct incomplete orthogonalization method.
 
@@ -22,7 +22,7 @@ and indefinite systems of linear equations can be handled by this single algorit
 
 This implementation allows a right preconditioner M.
 """
-function diom{T <: Number}(A :: AbstractLinearOperator, b :: AbstractVector{T};
+function diom_lu{T <: Number}(A :: AbstractLinearOperator, b :: AbstractVector{T};
                               M :: AbstractLinearOperator=opEye(size(A,1)),
                               atol :: Float64=1.0e-8, rtol :: Float64=1.0e-6,
                               itmax :: Int=0, memory :: Int=20, verbose :: Bool=false)

@@ -2,7 +2,7 @@ function test_mp()
   @printf("Tests of multi-precision methods:\n")
   n = 5
   for fn in (:cg, :cgls, :usymqr, :cgne, :cgs, :crmr, :cg_lanczos,
-             :dqgmres, :diom, :cr, :lslq, :lsqr, :lsmr, :craig,
+             :dqgmres, :diom, :cr, :lslq, :lsqr, :lsmr, :craig, :usymlqr,
              :craigmr, :crls, :symmlq, :minres, :cg_lanczos_shift_seq,
              :bilq, :minres_qlp, :qmr, :usymlq, :tricg, :trimr, :trilqr, :bilqr)
     @printf("%s ", string(fn))
@@ -19,7 +19,7 @@ function test_mp()
         x = @eval $fn($A, $b, $c)[1]
       elseif fn in (:trilqr, :bilqr)
         x, t = @eval $fn($A, $b, $c)[1:2]
-      elseif fn in (:tricg, :trimr)
+      elseif fn in (:usymlqr, :tricg, :trimr)
         x, y = @eval $fn($A, $b, $c)[1:2]
       else
         x = @eval $fn($A, $b)[1]

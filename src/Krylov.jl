@@ -107,12 +107,14 @@ include("diom.jl")
 
 include("usymlq.jl")
 include("usymqr.jl")
+include("usymlqr.jl")
+include("trilqr.jl")
 include("tricg.jl")
 include("trimr.jl")
-include("trilqr.jl")
+
+include("cgs.jl")
 
 include("bilq.jl")
-include("cgs.jl")
 include("qmr.jl")
 include("bilqr.jl")
 

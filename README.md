@@ -1,12 +1,10 @@
 # Krylov.jl: A Julia basket of hand-picked Krylov methods
 
-[![DOI](https://zenodo.org/badge/31977760.svg)](https://zenodo.org/badge/latestdoi/31977760)
-[![Build Status](https://travis-ci.org/JuliaSmoothOptimizers/Krylov.jl.svg?branch=master)](https://travis-ci.org/JuliaSmoothOptimizers/Krylov.jl)
-[![Build status](https://ci.appveyor.com/api/projects/status/3xt558lune9f5r2v?svg=true)](https://ci.appveyor.com/project/dpo/krylov-jl)
-[![Build Status](https://api.cirrus-ci.com/github/JuliaSmoothOptimizers/Krylov.jl.svg)](https://cirrus-ci.com/github/JuliaSmoothOptimizers/Krylov.jl)
-[![Coverage Status](https://coveralls.io/repos/github/JuliaSmoothOptimizers/Krylov.jl/badge.svg?branch=master)](https://coveralls.io/github/JuliaSmoothOptimizers/Krylov.jl?branch=master)
-[![codecov.io](https://codecov.io/github/JuliaSmoothOptimizers/Krylov.jl/coverage.svg?branch=master)](https://codecov.io/github/JuliaSmoothOptimizers/Krylov.jl?branch=master)
-[![](https://img.shields.io/badge/docs-dev-blue.svg)](https://JuliaSmoothOptimizers.github.io/Krylov.jl/dev)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3548984.svg)](https://doi.org/10.5281/zenodo.3548984)
+
+| **Documentation** | **Travis, AppVeyor and Cirrus build Statuses** | **Coverage** |
+|:-----------------:|:----------------------------------------------:|:------------:|
+| [![](https://img.shields.io/badge/docs-dev-blue.svg)](https://JuliaSmoothOptimizers.github.io/Krylov.jl/dev) | [![Build Status](https://travis-ci.org/JuliaSmoothOptimizers/Krylov.jl.svg?branch=master)](https://travis-ci.org/JuliaSmoothOptimizers/Krylov.jl) [![Build status](https://ci.appveyor.com/api/projects/status/3xt558lune9f5r2v?svg=true)](https://ci.appveyor.com/project/dpo/krylov-jl) [![Build Status](https://api.cirrus-ci.com/github/JuliaSmoothOptimizers/Krylov.jl.svg)](https://cirrus-ci.com/github/JuliaSmoothOptimizers/Krylov.jl) | [![Coverage Status](https://coveralls.io/repos/github/JuliaSmoothOptimizers/Krylov.jl/badge.svg?branch=master)](https://coveralls.io/github/JuliaSmoothOptimizers/Krylov.jl?branch=master) [![codecov.io](https://codecov.io/github/JuliaSmoothOptimizers/Krylov.jl/coverage.svg?branch=master)](https://codecov.io/github/JuliaSmoothOptimizers/Krylov.jl?branch=master) |
 
 ## Purpose
 
@@ -14,10 +12,24 @@ This package implements iterative methods for the solution of linear systems of 
 <p align="center">
   <b><i>Ax = b</i></b>,
 </p>
-and linear least-squares problems
+linear least-squares problems
 <p align="center">
   minimize ‖<b><i>b</i></b> - <b><i>Ax</i></b>‖.
 </p>
+linear least-norm problems
+<p align="center">
+  minimize ‖<b><i>x</i></b>‖  subject to  <b><i>Ax = b</i></b>,
+</p>
+adjoint systems
+<p align="center">
+  <b><i>Ax = b</i></b>  and  <b><i>Aᵀy = c</i></b>,
+</p>
+saddle-point and SQD systems
+<p align="center">
+  [<b><i>M </i></b>&nbsp;&nbsp;&nbsp;<b><i> A</i></b>]&nbsp; [<b><i>x</i></b>]            =           [<b><i>b</i></b>].
+  <br>
+  [<b><i>Aᵀ</i></b>&nbsp;&nbsp;      <b><i>-N</i></b>]&nbsp; [<b><i>y</i></b>]&nbsp;&nbsp;&nbsp;&nbsp;[<b><i>c</i></b>]&nbsp; 
+</p>.
 
 It is appropriate, in particular, in situations where such a problem must be solved but a factorization is not possible, either because:
 * the operator is not available explicitly,
@@ -47,9 +59,9 @@ Given a linear operator **_A_** and a right-hand side **_b_**, solve **_Ax ≈ b
 Krylov can be installed and tested through the Julia package manager:
 
 ```julia
-julia> import Pkg
-julia> Pkg.add("Krylov")
-julia> Pkg.test("Krylov")
+julia> ]
+pkg> add Krylov
+pkg> test Krylov
 ```
 
 ## Long-Term Goals

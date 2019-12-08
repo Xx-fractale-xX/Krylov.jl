@@ -8,11 +8,18 @@ linear least-squares problems
 ```math
   \min \|b - Ax\|,
 ```
-and linear least-norm problems
+linear least-norm problems
 ```math
-  \min \|x\| \quad \text{subject to} \ Ax = b.
+  \min \|x\| \quad \text{subject to} \quad Ax = b,
 ```
-
+adjoint systems
+```math
+  Ax = b \quad \text{and} \quad A^T y = c,
+```
+saddle-point and SQD systems
+```math
+  \begin{bmatrix} M & \phantom{-}A \\ A^T & -N \end{bmatrix} \begin{bmatrix} x \\ y \end{bmatrix} = \left(\begin{bmatrix} b \\ 0 \end{bmatrix},\begin{bmatrix} 0 \\ c \end{bmatrix},\begin{bmatrix} b \\ c \end{bmatrix}\right).
+```
 It is appropriate, in particular, in situations where such a problem must be solved but a factorization is not possible, either because:
 * the operator is not available explicitly,
 * the operator is dense, or
@@ -41,8 +48,9 @@ Given a linear operator ``A`` and a right-hand side ``b``, solve ``Ax = b``, whi
 Krylov can be installed and tested through the Julia package manager:
 
 ```julia
-julia> Pkg.add("Krylov")
-julia> Pkg.test("Krylov")
+julia> ]
+pkg> add Krylov
+pkg> test Krylov
 ```
 
 ## Long-Term Goals

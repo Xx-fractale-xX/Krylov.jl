@@ -6,7 +6,7 @@
 |:-----------------:|:----------------------------------------------:|:------------:|
 | [![](https://img.shields.io/badge/docs-dev-blue.svg)](https://JuliaSmoothOptimizers.github.io/Krylov.jl/dev) | [![Build Status](https://travis-ci.org/JuliaSmoothOptimizers/Krylov.jl.svg?branch=master)](https://travis-ci.org/JuliaSmoothOptimizers/Krylov.jl) [![Build status](https://ci.appveyor.com/api/projects/status/3xt558lune9f5r2v?svg=true)](https://ci.appveyor.com/project/dpo/krylov-jl) [![Build Status](https://api.cirrus-ci.com/github/JuliaSmoothOptimizers/Krylov.jl.svg)](https://cirrus-ci.com/github/JuliaSmoothOptimizers/Krylov.jl) | [![Coverage Status](https://coveralls.io/repos/github/JuliaSmoothOptimizers/Krylov.jl/badge.svg?branch=master)](https://coveralls.io/github/JuliaSmoothOptimizers/Krylov.jl?branch=master) [![codecov.io](https://codecov.io/github/JuliaSmoothOptimizers/Krylov.jl/coverage.svg?branch=master)](https://codecov.io/github/JuliaSmoothOptimizers/Krylov.jl?branch=master) |
 
-## Purpose
+## Content
 
 This package provides implementations of certain of the most useful Krylov method for linear systems with special emphasis on methods for square systems, linear least-squares problems, linear least-norm problems, adjoint systems, saddle-point systems and symmetric quasi-definite (SQD) systems.
 
@@ -38,7 +38,7 @@ Linear least-norm problems
 
 sould be solved when **_A_** is column-rank deficient but **_b_** is in the range of **_A_**.
 This situation occurs when **_b_** is in the range of **_A_** and
-   * **_A_** is square but singular, or
+   * **_A_** is square but singular,
    * **_A_** is short and wide.
 
 In some applications, adjoint systems

@@ -71,6 +71,10 @@ Iterative methods are recommanded in either of the following situations:
 
 ## Content
 
+| <!-- -->    | <!-- -->    |
+|-------------|-------------|
+| Foo         | Bar         |
+
 |    |    |       |       |       |       |
 |:--:|:--:|:-----:|:-----:|:-----:|:-----:|
 | CG | CR | SYMMLQ | CG-LANCZOS | MINRES | MINRES-QLP |

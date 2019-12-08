@@ -71,11 +71,13 @@ Iterative methods are recommanded in either of the following situations:
 
 ## Content
 
+|    |    |       |       |       |       |
 |:--:|:--:|:-----:|:-----:|:-----:|:-----:|
 | CG | CR | SYMMLQ | CG-LANCZOS | MINRES | MINRES-QLP |
 | BiLQ | CGS | QMR | BiLQR | DIOM | DQGMRES |
 
-|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|
+| | | | | | | |
+|-|-|-|-|-|-|-|
 | USYMLQ | USYMQR | LNLQ | CRAIG | CRAIGMR | CGNE | CRMR |
 | LSLQ | LSQR | LSMR |CGLS | CRLS | TriLQR | USYMLQR |
 

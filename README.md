@@ -17,6 +17,7 @@ systems have been developed too.
 <p align="center">
   <b><i>Ax = b</i></b>
 </p>
+<br>
 should be solved when **_A_** has full column rank and **_b_** lies in the range space of **_A_**.
 This situation occurs when
    * **_A_** is square and nonsingular, or
@@ -25,31 +26,23 @@ This situation occurs when
 <p align="center">
   minimize ‖<b><i>b</i></b> - <b><i>Ax</i></b>‖
 </p>
+<br>
 should be solved when **_b_** is not in the range of **_A_**, regardless of the shape and rank of **_A_**.
 If there are infinitely many such **_x_** (because **_A_** is rank deficient), identify the one with minimum norm.
 3. Linear least-norm problems
 <p align="center">
   minimize ‖<b><i>x</i></b>‖ &nbsp; subject to &nbsp; <b><i>Ax = b</i></b>
 </p>
+<br>
 sould be solved when **_A_** is column-rank deficient but **_b_** is in the range of **_A_**.
 This situation occurs when **_b_** is in the range of **_A_** and
    * **_A_** is square but singular, or
    * **_A_** is short and wide,
 4. Adjoint systems
 <p align="center">
-  <b><i>Ax = b</i></b> &nbsp; and &nbsp; <b><i>Aᵀy = c</i></b>,
-  ⟷
-  [<b><i>0 </i></b>&nbsp;&nbsp;&nbsp;<b><i>A</i></b>]&nbsp; [<b><i>y</i></b>]            =           [<b><i>b</i></b>].
-  <br>
-  [<b><i>Aᵀ</i></b>&nbsp;&nbsp;      <b><i>0</i></b>]&nbsp; [<b><i>x</i></b>]&nbsp;&nbsp;&nbsp;&nbsp;[<b><i>c</i></b>]&nbsp; 
+  <b><i>Ax = b</i></b> &nbsp; and &nbsp; <b><i>Aᵀy = c</i></b>
 </p>
-5. saddle-point systems
-<p align="center">
-  [<b><i>M </i></b>&nbsp;&nbsp;&nbsp;<b><i> A</i></b>]&nbsp; [<b><i>x</i></b>]            =           [<b><i>b</i></b>],[<b><i>M </i></b>&nbsp;&nbsp;&nbsp;<b><i> A</i></b>]&nbsp; [<b><i>x</i></b>]            =           [<b><i>0</i></b>].
-  <br>
-  [<b><i>Aᵀ</i></b>&nbsp;&nbsp;      <b><i>-N</i></b>]&nbsp; [<b><i>y</i></b>]&nbsp;&nbsp;&nbsp;&nbsp;[<b><i>0</i></b>]&nbsp; [<b><i>Aᵀ</i></b>&nbsp;&nbsp;      <b><i>-N</i></b>]&nbsp; [<b><i>y</i></b>]&nbsp;&nbsp;&nbsp;&nbsp;[<b><i>c</i></b>]&nbsp;
-</p>
-6. SQD systems
+5. saddle-point and SQD systems
 <p align="center">
   [<b><i>M </i></b>&nbsp;&nbsp;&nbsp;<b><i> A</i></b>]&nbsp; [<b><i>x</i></b>]            =           [<b><i>b</i></b>].
   <br>

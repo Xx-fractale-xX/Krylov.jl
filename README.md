@@ -78,4 +78,3 @@ julia> ]
 pkg> add Krylov
 pkg> test Krylov
 ```
-

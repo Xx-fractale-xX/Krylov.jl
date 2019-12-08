@@ -8,46 +8,42 @@
 
 ## Purpose
 
-This package implements iterative methods for the solution of linear systems of equations **_Ax ≈ b_**
-which are associated to square systems, linear least-squares and linear least-norm problems.
-Methods for linear systems with more specific structures such that adjoint, saddle-point or symmetric quasi-definite (SQD)
-systems have been developed too.
+This package provides implementations of certain of the most useful Krylov method for linear systems with special emphasis on methods for square systems, linear least-squares problems, linear least-norm problems, adjoint systems, saddle-point systems and symmetric quasi-definite (SQD) systems.
 
-1. Square systems
+Square systems
 <p align="center">
   <b><i>Ax = b</i></b>
 </p>
-<br>
 should be solved when **_A_** has full column rank and **_b_** lies in the range space of **_A_**.
 This situation occurs when
    * **_A_** is square and nonsingular, or
    * **_A_** is tall and has full column rank and **_b_** lies in the range of **_A_**.
-2. Linear least-squares problems
+Linear least-squares problems
 <p align="center">
   minimize ‖<b><i>b</i></b> - <b><i>Ax</i></b>‖
 </p>
 <br>
 should be solved when **_b_** is not in the range of **_A_**, regardless of the shape and rank of **_A_**.
 If there are infinitely many such **_x_** (because **_A_** is rank deficient), identify the one with minimum norm.
-3. Linear least-norm problems
+Linear least-norm problems
 <p align="center">
   minimize ‖<b><i>x</i></b>‖ &nbsp; subject to &nbsp; <b><i>Ax = b</i></b>
 </p>
-<br>
 sould be solved when **_A_** is column-rank deficient but **_b_** is in the range of **_A_**.
 This situation occurs when **_b_** is in the range of **_A_** and
    * **_A_** is square but singular, or
    * **_A_** is short and wide,
-4. Adjoint systems
+For more specific applications, adjoint systems
 <p align="center">
   <b><i>Ax = b</i></b> &nbsp; and &nbsp; <b><i>Aᵀy = c</i></b>
 </p>
-5. saddle-point and SQD systems
+saddle-point and SQD systems
 <p align="center">
   [<b><i>M </i></b>&nbsp;&nbsp;&nbsp;<b><i> A</i></b>]&nbsp; [<b><i>x</i></b>]            =           [<b><i>b</i></b>].
   <br>
   [<b><i>Aᵀ</i></b>&nbsp;&nbsp;      <b><i>-N</i></b>]&nbsp; [<b><i>y</i></b>]&nbsp;&nbsp;&nbsp;&nbsp;[<b><i>c</i></b>]&nbsp; 
 </p>
+have been developed too.
 
 It is appropriate, in particular, in situations where such a problem must be solved but a factorization is not possible, either because:
 * the operator is not available explicitly,

@@ -69,24 +69,6 @@ Iterative methods are recommanded in either of the following situations:
 * the operator can be represented efficiently as a sparse matrix,
 * the operator is *fast*, i.e., can be applied with far better complexity than if it were materialized as a matrix. Often, fast operators would materialize as *dense* matrices.
 
-## Content
-
-| <!-- -->    | <!-- -->    |
-|-------------|-------------|
-| Foo         | Bar         |
-
-|    |    |       |       |       |       |
-|:--:|:--:|:-----:|:-----:|:-----:|:-----:|
-| CG | CR | SYMMLQ | CG-LANCZOS | MINRES | MINRES-QLP |
-| BiLQ | CGS | QMR | BiLQR | DIOM | DQGMRES |
-
-| | | | | | | |
-|-|-|-|-|-|-|-|
-| USYMLQ | USYMQR | LNLQ | CRAIG | CRAIGMR | CGNE | CRMR |
-| LSLQ | LSQR | LSMR |CGLS | CRLS | TriLQR | USYMLQR |
-
-[Site du Zéro](http://www.siteduzero.com)
-
 ## How to Install
 
 Krylov can be installed and tested through the Julia package manager:

@@ -16,8 +16,9 @@ This package provides implementations of certain of the most useful Krylov metho
   <b><i>Ax = b</i></b>
 </p>
 
-should be solved when **_A_** has full column rank and **_b_** lies in the range space of **_A_**.
-This situation occurs when **_A_** is square and nonsingular, or **_A_** is tall and has full column rank and **_b_** lies in the range of **_A_**.
+should be solved when **_A_** has full column rank and **_b_** lies in the range space of **_A_**. This situation occurs when
+   * **_A_** is square and nonsingular,
+   * **_A_** is tall and has full column rank and **_b_** lies in the range of **_A_**.
 
 2. Linear least-squares problems
 
@@ -57,7 +58,7 @@ This situation occurs when **_b_** is in the range of **_A_** and
   [<b><i>Aᵀ</i></b>&nbsp;&nbsp;      <b><i>-N</i></b>]&nbsp; [<b><i>y</i></b>]&nbsp;&nbsp;&nbsp;&nbsp;[<b><i>c</i></b>]&nbsp; 
 </p>
 
-are also encountered. Methods specialized for them have been developed too.
+are also encountered in more specific applications. Methods specialized for all those different kind of linear systems are available in ***Krylov.jl***.
 
 Krylov solvers are appropriate, in particular, in situations where such a problem must be solved but a factorization is not possible, either because:
 * the operator is not available explicitly,

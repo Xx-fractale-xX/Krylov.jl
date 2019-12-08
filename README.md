@@ -18,6 +18,7 @@ should be solved when **_A_** has full column rank and **_b_** lies in the range
 This situation occurs when
    * **_A_** is square and nonsingular, or
    * **_A_** is tall and has full column rank and **_b_** lies in the range of **_A_**.
+<br>
 Linear least-squares problems
 <p align="center">
   minimize ‖<b><i>b</i></b> - <b><i>Ax</i></b>‖
@@ -25,6 +26,7 @@ Linear least-squares problems
 <br>
 should be solved when **_b_** is not in the range of **_A_**, regardless of the shape and rank of **_A_**.
 If there are infinitely many such **_x_** (because **_A_** is rank deficient), identify the one with minimum norm.
+<br>
 Linear least-norm problems
 <p align="center">
   minimize ‖<b><i>x</i></b>‖ &nbsp; subject to &nbsp; <b><i>Ax = b</i></b>
@@ -32,8 +34,9 @@ Linear least-norm problems
 sould be solved when **_A_** is column-rank deficient but **_b_** is in the range of **_A_**.
 This situation occurs when **_b_** is in the range of **_A_** and
    * **_A_** is square but singular, or
-   * **_A_** is short and wide,
-For more specific applications, adjoint systems
+   * **_A_** is short and wide.
+<br>
+In some applications, adjoint systems
 <p align="center">
   <b><i>Ax = b</i></b> &nbsp; and &nbsp; <b><i>Aᵀy = c</i></b>
 </p>
@@ -43,7 +46,7 @@ saddle-point and SQD systems
   <br>
   [<b><i>Aᵀ</i></b>&nbsp;&nbsp;      <b><i>-N</i></b>]&nbsp; [<b><i>y</i></b>]&nbsp;&nbsp;&nbsp;&nbsp;[<b><i>c</i></b>]&nbsp; 
 </p>
-have been developed too.
+are also encountered. Methods specialized for them have been developed too.
 
 It is appropriate, in particular, in situations where such a problem must be solved but a factorization is not possible, either because:
 * the operator is not available explicitly,

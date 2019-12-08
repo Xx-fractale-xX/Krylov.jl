@@ -8,9 +8,9 @@
 
 ## Content
 
-This package provides implementations of certain of the most useful Krylov method for linear systems with special emphasis on methods for square systems, linear least-squares problems, linear least-norm problems, adjoint systems, saddle-point systems and symmetric quasi-definite (SQD) systems.
+This package provides implementations of certain of the most useful Krylov method for a wide variety of linear systems.
 
-Square systems
+1. Square or rectangular systems
 
 <p align="center">
   <b><i>Ax = b</i></b>
@@ -18,19 +18,23 @@ Square systems
 
 should be solved when **_A_** has full column rank and **_b_** lies in the range space of **_A_**.
 This situation occurs when
-   * **_A_** is square and nonsingular, or
+   * **_A_** is square and nonsingular
    * **_A_** is tall and has full column rank and **_b_** lies in the range of **_A_**.
 
-Linear least-squares problems
+2. Linear least-squares problems
 
 <p align="center">
   minimize ‖<b><i>b</i></b> - <b><i>Ax</i></b>‖
 </p>
 
 should be solved when **_b_** is not in the range of **_A_**, regardless of the shape and rank of **_A_**.
-If there are infinitely many such **_x_** (because **_A_** is rank deficient), identify the one with minimum norm.
+If there are infinitely many such **_x_** (because **_A_** is rank deficient), identify the one with minimum norm
 
-Linear least-norm problems
+<p align="center">
+  minimize ‖<b><i>x</i></b>‖ &nbsp; subject to &nbsp; <b><i>x</i></b> ∈ argmin ‖<b><i>b</i></b> - <b><i>Ax</i></b>‖.
+</p>
+
+3. Linear least-norm problems
 
 <p align="center">
   minimize ‖<b><i>x</i></b>‖ &nbsp; subject to &nbsp; <b><i>Ax = b</i></b>
@@ -41,13 +45,13 @@ This situation occurs when **_b_** is in the range of **_A_** and
    * **_A_** is square but singular,
    * **_A_** is short and wide.
 
-In some applications, adjoint systems
+4. Adjoint systems
 
 <p align="center">
   <b><i>Ax = b</i></b> &nbsp; and &nbsp; <b><i>Aᵀy = c</i></b>,
 </p>
 
-saddle-point or symmetric quasi-definite systems
+5. saddle-point or symmetric quasi-definite (SQD) systems
 
 <p align="center">
   [<b><i>M </i></b>&nbsp;&nbsp;&nbsp;<b><i> A</i></b>]&nbsp; [<b><i>x</i></b>]            =           [<b><i>b</i></b>].

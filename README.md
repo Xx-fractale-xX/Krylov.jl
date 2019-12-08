@@ -27,7 +27,7 @@ should be solved when **_A_** has full column rank and **_b_** lies in the range
 </p>
 
 should be solved when **_b_** is not in the range of **_A_**, regardless of the shape and rank of **_A_**.
-If there are infinitely many such **_x_** (because **_A_** is rank-deficient), the one with minimum norm is identified
+If there are infinitely many such **_x_** (because **_A_** is rank-deficient), one with minimum norm is identified
 
 <p align="center">
   minimize ‖<b><i>x</i></b>‖ &nbsp; subject to &nbsp; <b><i>x</i></b> ∈ argmin ‖<b><i>b</i></b> - <b><i>Ax</i></b>‖.
@@ -69,6 +69,21 @@ Iterative methods are recommanded in either of the following situations:
 * the operator can be represented efficiently as a sparse matrix,
 * the operator is *fast*, i.e., can be applied with far better complexity than if it were materialized as a matrix. Often, fast operators would materialize as *dense* matrices.
 
+## Content
+
+|CG|CR|
+|SYMMLQ|CG-LANCZOS|MINRES|MINRES-QLP|
+|BiLQ|CGS|QMR|
+|DIOM|DQGMRES|
+|USYMLQ|USYMQR|
+|CGNE|CRMR|
+|LNLQ|CRAIG|CRAIGMR|
+|CGLS|CRLS|
+|LSLQ|LSQR|LSMR|
+|BiLQR|TriLQR|USYMLQR|
+
+[Site du Zéro](http://www.siteduzero.com)
+
 ## How to Install
 
 Krylov can be installed and tested through the Julia package manager:
@@ -78,3 +93,4 @@ julia> ]
 pkg> add Krylov
 pkg> test Krylov
 ```
+

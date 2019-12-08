@@ -52,15 +52,3 @@ julia> ]
 pkg> add Krylov
 pkg> test Krylov
 ```
-
-## Long-Term Goals
-
-* provide implementations of certain of the most useful Krylov method for
-  linear systems with special emphasis on methods for linear least-squares
-  problems and saddle-point linear system (including symmetric quasi-definite
-  systems)
-* provide state-of-the-art implementations alongside simple implementations of
-  equivalent methods in exact artithmetic (e.g., LSQR vs. CGLS, MINRES vs. CR,
-  LSMR vs. CRLS, etc.)
-* provide simple, consistent calling signatures and avoid over-typing
-* ensure those implementations are fast and stable.

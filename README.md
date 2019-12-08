@@ -58,7 +58,7 @@ This situation occurs when **_b_** is in the range of **_A_** and
   [<b><i>Aᵀ</i></b>&nbsp;&nbsp;      <b><i>-N</i></b>]&nbsp; [<b><i>y</i></b>]&nbsp;&nbsp;&nbsp;&nbsp;[<b><i>c</i></b>]
 </p>
 
-are also encountered in more specific applications. Krylov solvers are particularly appropriate in situations where such a problem must be solved but a factorization is not possible, either because:
+are also encountered in more specific applications. Krylov solvers are particularly appropriate in situations where such problems must be solved but a factorization is not possible, either because:
 * the operator is not available explicitly,
 * the operator is dense,
 * factors would consume an excessive amount of memory.

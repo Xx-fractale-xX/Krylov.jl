@@ -8,7 +8,7 @@
 
 ## Content
 
-This package provides implementations of certain of the most useful Krylov method for a wide variety of linear systems.
+This package provides implementations of certain of the most useful Krylov method for a wide variety of linear systems.  
 
 1. Square or rectangular systems
 
@@ -19,7 +19,7 @@ This package provides implementations of certain of the most useful Krylov metho
 should be solved when **_A_** has full column rank and **_b_** lies in the range space of **_A_**.
 This situation occurs when
    * **_A_** is square and nonsingular
-   * **_A_** is tall and has full column rank and **_b_** lies in the range of **_A_**.
+   * **_A_** is tall and has full column rank and **_b_** lies in the range of **_A_**.  
 
 2. Linear least-squares problems
 

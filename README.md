@@ -63,7 +63,7 @@ are also encountered in more specific applications. Krylov solvers are particula
 * the operator is dense,
 * factors would consume an excessive amount of memory.
 
-Iterative methods are recommanded in either of the following situations:
+Iterative methods are recommended in either of the following situations:
 * the problem is sufficiently large that a factorization is not feasible or would be slower,
 * an effective preconditioner is known in cases where the problem has unfavorable spectral structure,
 * the operator can be represented efficiently as a sparse matrix,

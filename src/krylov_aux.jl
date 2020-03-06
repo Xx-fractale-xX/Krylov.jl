@@ -1,6 +1,6 @@
 """
 Numerically stable symmetric Givens reflection.
-Given `a` and `b`, return `(c, s, ρ)` such that
+Given `a` and `b` reals, return `(c, s, ρ)` such that
 
     [ c  s ] [ a ] = [ ρ ]
     [ s -c ] [ b ] = [ 0 ].
@@ -29,18 +29,60 @@ function sym_givens(a :: T, b :: T) where T <: AbstractFloat
     t = a / b
     s = sign(b) / sqrt(one(T) + t * t)
     c = s * t
-    ρ = b / s  # Computationally better than d = a / c since |c| ≤ |s|.
+    ρ = b / s  # Computationally better than ρ = a / c since |c| ≤ |s|.
 
   else
     t = b / a
     c = sign(a) / sqrt(one(T) + t * t)
     s = c * t
-    ρ = a / c  # Computationally better than d = b / s since |s| ≤ |c|
+    ρ = a / c  # Computationally better than ρ = b / s since |s| ≤ |c|
   end
 
   return (c, s, ρ)
 end
 
+"""
+Numerically stable symmetric Givens reflection.
+Given `a` and `b` complexes, return `(c, s, ρ)` with
+c real and (s, ρ) complexes such that
+
+    [ c   s ] [ a ] = [ ρ ]
+    [ s̅  -c ] [ b ] = [ 0 ].
+"""
+function sym_givens(a :: Complex{T}, b :: Complex{T}) where T <: AbstractFloat
+  #
+  # Modeled after the corresponding Fortran function by M. A. Saunders and S.-C. Choi.
+  # A. Montoison, Montreal, March 2020.
+
+  abs_a = abs(a)
+  abs_b = abs(b)
+
+  if abs_b == 0
+    c = one(T)
+    s = zero(Complex{T})
+    ρ = a
+
+  elseif abs_a == 0
+    c = zero(T)
+    s = one(Complex{T})
+    ρ = b
+
+  elseif abs_b > abs_a
+    t = abs_a / abs_b
+    c = one(T) / sqrt(one(T) + t * t)
+    s = c * conj((b / abs_b) / (a / abs_a))
+    c = c * t
+    ρ = b / conj(s)
+
+  else
+    t = abs_b / abs_a
+    c = one(T) / sqrt(one(T) + t * t)
+    s = c * t * conj((b / abs_b) / (a / abs_a))
+    ρ = a / c
+  end
+
+  return (c, s, ρ)
+end
 
 """
 Find the real roots of the quadratic

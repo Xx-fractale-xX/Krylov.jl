@@ -123,12 +123,13 @@ end
 # Benchmarks indicate that the form BLAS.dot(n, x, 1, y, 1) is substantially faster than BLAS.dot(x, y)
 
 krylov_dot(n :: Int, x :: Vector{T}, dx :: Int, y :: Vector{T}, dy :: Int) where T <: BLAS.BlasReal = BLAS.dot(n, x, dx, y, dy)
+krylov_dot(n :: Int, x :: Vector{T}, dx :: Int, y :: Vector{T}, dy :: Int) where T <: BLAS.BlasComplex = BLAS.dotc(n, x, dx, y, dy)
 krylov_dot(n :: Int, x :: AbstractVector{T}, dx :: Int, y :: AbstractVector{T}, dy :: Int) where T <: Number = dot(x, y)  # ignore dx, dy here
 
-krylov_norm2(n :: Int, x :: Vector{T}, dx :: Int) where T <: BLAS.BlasReal = BLAS.nrm2(n, x, dx)
+krylov_norm2(n :: Int, x :: Vector{T}, dx :: Int) where T <: BLAS.BlasFloat = BLAS.nrm2(n, x, dx)
 krylov_norm2(n :: Int, x :: AbstractVector{T}, dx :: Int) where T <: Number = norm(x)  # ignore dx here
 
-krylov_scal!(n :: Int, s :: T, x :: Vector{T}, dx :: Int) where T <: BLAS.BlasReal = BLAS.scal!(n, s, x, dx)
+krylov_scal!(n :: Int, s :: T, x :: Vector{T}, dx :: Int) where T <: BLAS.BlasFloat = BLAS.scal!(n, s, x, dx)
 function krylov_scal!(n :: Int, s :: T, x :: AbstractVector{T}, dx :: Int) where T <: Number
   @simd for i = 1:dx:n
     @inbounds x[i] *= s
@@ -136,7 +137,7 @@ function krylov_scal!(n :: Int, s :: T, x :: AbstractVector{T}, dx :: Int) where
   return x
 end
 
-krylov_axpy!(n :: Int, s :: T, x :: Vector{T}, dx :: Int, y :: Vector{T}, dy :: Int) where T <: BLAS.BlasReal = BLAS.axpy!(n, s, x, dx, y, dy)
+krylov_axpy!(n :: Int, s :: T, x :: Vector{T}, dx :: Int, y :: Vector{T}, dy :: Int) where T <: BLAS.BlasFloat = BLAS.axpy!(n, s, x, dx, y, dy)
 function krylov_axpy!(n :: Int, s :: T, x :: AbstractVector{T}, dx :: Int, y :: AbstractVector{T}, dy :: Int) where T <: Number
   # assume dx = dy
   @simd for i = 1:dx:n
@@ -145,7 +146,7 @@ function krylov_axpy!(n :: Int, s :: T, x :: AbstractVector{T}, dx :: Int, y :: 
   return y
 end
 
-krylov_axpby!(n :: Int, s :: T, x :: Vector{T}, dx :: Int, t :: T, y :: Vector{T}, dy :: Int) where T <: BLAS.BlasReal = BLAS.axpby!(n, s, x, dx, t, y, dy)
+krylov_axpby!(n :: Int, s :: T, x :: Vector{T}, dx :: Int, t :: T, y :: Vector{T}, dy :: Int) where T <: BLAS.BlasFloat = BLAS.axpby!(n, s, x, dx, t, y, dy)
 function krylov_axpby!(n :: Int, s :: T, x :: AbstractVector{T}, dx :: Int, t :: T, y :: AbstractVector{T}, dy :: Int) where T <: Number
   # assume dx = dy
   @simd for i = 1:dx:n

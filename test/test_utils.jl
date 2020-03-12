@@ -2,166 +2,168 @@ include("get_div_grad.jl")
 include("gen_lsq.jl")
 include("check_min_norm.jl")
 
+gpu(x) = CuArrays.functional() ? convert(CuArray{eltype(x)}, x) : x
+
 # Symmetric and positive definite systems.
 function symmetric_definite(n :: Int=10)
-  A = spdiagm(-1 => ones(n-1), 0 => 4*ones(n), 1 => ones(n-1))
-  b = A * [1:n;]
+  A = spdiagm(-1 => ones(n-1), 0 => 4*ones(n), 1 => ones(n-1)) |> gpu
+  b = A * [1:n;] |> gpu
   return A, b
 end
 
 # Symmetric and indefinite systems.
 function symmetric_indefinite(n :: Int=10)
-  A = spdiagm(-1 => ones(n-1), 0 => 4*ones(n), 1 => ones(n-1))
-  A = A - 3 * I
-  b = A * [1:n;]
+  A = spdiagm(-1 => ones(n-1), 0 => 4*ones(n), 1 => ones(n-1)) |> gpu
+  A = A - 3 * I  |> gpu
+  b = A * [1:n;] |> gpu
   return A, b
 end
 
 # Nonsymmetric and positive definite systems.
 function nonsymmetric_definite(n :: Int=10)
-  A = [i == j ? 1.0*n : i < j ? 1.0 : -1.0 for i=1:n, j=1:n]
-  b = A * [1:n;]
+  A = [i == j ? 1.0*n : i < j ? 1.0 : -1.0 for i=1:n, j=1:n] |> gpu
+  b = A * [1:n;]  |> gpu
   return A, b
 end
 
 # Nonsymmetric and indefinite systems.
 function nonsymmetric_indefinite(n :: Int=10)
-  A = [i == j ? n*(-1.0)^(i*j) : i < j ? 1.0 : -1.0 for i=1:n, j=1:n]
-  b = A * [1:n;]
+  A = [i == j ? n*(-1.0)^(i*j) : i < j ? 1.0 : -1.0 for i=1:n, j=1:n]  |> gpu
+  b = A * [1:n;] |> gpu
   return A, b
 end
 
 # Underdetermined and consistent systems.
 function under_consistent(n :: Int=10, m :: Int=25)
   n < m || error("Square or overdetermined system!")
-  A = [i/j - j/i for i=1:n, j=1:m]
-  b = A * ones(m)
+  A = [i/j - j/i for i=1:n, j=1:m] |> gpu
+  b = A * ones(m) |> gpu
   return A, b
 end
 
 # Underdetermined and inconsistent systems.
 function under_inconsistent(n :: Int=10, m :: Int=25)
   n < m || error("Square or overdetermined system!")
-  A = ones(n, m)
-  b = [i == 1 ? -1.0 : 1.0*i for i=1:n]
+  A = ones(n, m) |> gpu
+  b = [i == 1 ? -1.0 : 1.0*i for i=1:n] |> gpu
   return A, b
 end
 
 # Square and consistent systems.
 function square_consistent(n :: Int=10)
-  A = [i/j - j/i for i=1:n, j=1:n]
-  b = A * ones(n)
+  A = [i/j - j/i for i=1:n, j=1:n] |> gpu
+  b = A * ones(n) |> gpu
   return A, b
 end
 
 # Square and inconsistent systems.
 function square_inconsistent(n :: Int=10)
-  A = eye(n); A[1, 1] = 0.0
-  b = ones(n)
+  A = eye(n)  |> gpu ; A[1, 1] = 0.0
+  b = ones(n)  |> gpu
   return A, b
 end
 
 # Overdetermined and consistent systems.
 function over_consistent(n :: Int=25, m :: Int=10)
   n > m || error("Underdetermined or square system!")
-  A = [i/j - j/i for i=1:n, j=1:m]
-  b = A * ones(m)
+  A = [i/j - j/i for i=1:n, j=1:m]  |> gpu
+  b = A * ones(m)  |> gpu
   return A, b
 end
 
 # Overdetermined and inconsistent systems.
 function over_inconsistent(n :: Int=25, m :: Int=10)
   n > m || error("Underdetermined or square system!")
-  A = ones(n, m)
-  b = [i == 1 ? -1.0 : 1.0*i for i=1:n]
+  A = ones(n, m)  |> gpu
+  b = [i == 1 ? -1.0 : 1.0*i for i=1:n]  |> gpu
   return A, b
 end
 
 # Underdetermined and integer systems.
 function under_int(n :: Int=3, m :: Int=5)
   n < m || error("Square or overdetermined system!")
-  A = [i^j for i=1:n, j=1:m]
-  b = A * ones(Int, m)
+  A = [i^j for i=1:n, j=1:m]  |> gpu
+  b = A * ones(Int, m)  |> gpu
   return A, b
 end
 
 # Square and integer systems.
 function square_int(n :: Int=10)
-  A = spdiagm(-1 => ones(Int, n-1), 0 => 4*ones(Int, n), 1 => ones(Int, n-1))
-  b = A * [1:n;]
+  A = spdiagm(-1 => ones(Int, n-1), 0 => 4*ones(Int, n), 1 => ones(Int, n-1))  |> gpu
+  b = A * [1:n;]  |> gpu
   return A, b
 end
 
 # Overdetermined and integer systems.
 function over_int(n :: Int=5, m :: Int=3)
   n > m || error("Underdetermined or square system!")
-  A = [i^j for i=1:n, j=1:m]
-  b = A * ones(Int, m)
+  A = [i^j for i=1:n, j=1:m] |> gpu
+  b = A * ones(Int, m) |> gpu
   return A, b
 end
 
 # Sparse Laplacian.
 function sparse_laplacian(n :: Int=16)
-  A = get_div_grad(n, n, n)
-  b = ones(size(A, 1))
+  A = get_div_grad(n, n, n) |> gpu
+  b = ones(size(A, 1)) |> gpu
   return A, b
 end
 
 # Symmetric, indefinite and almost singular systems.
 function almost_singular(n :: Int=16)
   A = get_div_grad(n, n, n)
-  A = A - 5 * I
-  b = randn(size(A, 1))
+  A = A - 5 * I  |> gpu
+  b = randn(size(A, 1))  |> gpu
   return A, b
 end
 
 # System that cause a breakdown with the symmetric Lanczos process.
 function symmetric_breakdown()
-  A = [0.0 1.0; 1.0 0.0]
-  b = [1.0; 0.0]
+  A = [0.0 1.0; 1.0 0.0]  |> gpu
+  b = [1.0; 0.0]  |> gpu
   return A, b
 end
 
 # System that cause a breakdown with the Lanczos biorthogonalization
 # and the orthogonal tridiagonalization processes.
 function unsymmetric_breakdown()
-  A = [0.0 1.0; -1.0 0.0]
-  b = [1.0; 0.0]
-  c = [-1.0; 0.0]
+  A = [0.0 1.0; -1.0 0.0]  |> gpu
+  b = [1.0; 0.0]  |> gpu
+  c = [-1.0; 0.0]  |> gpu
   return A, b, c
 end
 
 # Underdetermined consistent adjoint systems.
 function underdetermined_adjoint(n :: Int=100, m :: Int=200)
   n < m || error("Square or overdetermined system!")
-  A = [i == j ? 10.0 : i < j ? 1.0 : -1.0 for i=1:n, j=1:m]
-  b = A * [1:m;]
-  c = A' * [-n:-1;]
+  A = [i == j ? 10.0 : i < j ? 1.0 : -1.0 for i=1:n, j=1:m]  |> gpu
+  b = A * [1:m;]  |> gpu
+  c = A' * [-n:-1;]  |> gpu
   return A, b, c
 end
 
 # Square consistent adjoint systems.
 function square_adjoint(n :: Int=100)
-  A = [i == j ? 10.0 : i < j ? 1.0 : -1.0 for i=1:n, j=1:n]
-  b = A * [1:n;]
-  c = A' * [-n:-1;]
+  A = [i == j ? 10.0 : i < j ? 1.0 : -1.0 for i=1:n, j=1:n]  |> gpu
+  b = A * [1:n;]  |> gpu
+  c = A' * [-n:-1;]  |> gpu
   return A, b, c
 end
 
 # Adjoint systems with Ax = b underdetermined consistent and Aᵀt = c overdetermined insconsistent.
 function rectangular_adjoint(n :: Int=10, m :: Int=25)
-  Aᵀ, c = over_inconsistent(m, n)
-  A = transpose(Aᵀ)
-  b = A * ones(m)
+  Aᵀ, c = over_inconsistent(m, n)  |> gpu
+  A = transpose(Aᵀ)  |> gpu
+  b = A * ones(m)  |> gpu
   return A, b, c
 end
 
 # Overdetermined consistent adjoint systems.
 function overdetermined_adjoint(n :: Int=200, m :: Int=100)
   n > m || error("Underdetermined or square system!")
-  A = [i == j ? 10.0 : i < j ? 1.0 : -1.0 for i=1:n, j=1:m]
-  b = A * [1:m;]
-  c = A' * [-n:-1;]
+  A = [i == j ? 10.0 : i < j ? 1.0 : -1.0 for i=1:n, j=1:m] |> gpu
+  b = A * [1:m;]  |> gpu
+  c = A' * [-n:-1;]  |> gpu
   return A, b, c
 end
 

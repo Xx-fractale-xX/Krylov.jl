@@ -124,7 +124,7 @@ end
 # Call BLAS if possible when using dot, norm, etc.
 # Benchmarks indicate that the form BLAS.dot(n, x, 1, y, 1) is substantially faster than BLAS.dot(x, y)
 
-krylov_dot(n :: Int, x :: Vector{T}, dx :: Int, y :: Vector{T}, dy :: Int) where T <: BLAS.BlasReal = BLAS.dot(n, x, dx, y, dy)
+#krylov_dot(n :: Int, x :: Vector{T}, dx :: Int, y :: Vector{T}, dy :: Int) where T <: BLAS.BlasReal = BLAS.dot(n, x, dx, y, dy)
 krylov_dot(n :: Int, x :: AbstractVector{T}, dx :: Int, y :: AbstractVector{T}, dy :: Int) where T <: Number = dot(x, y)  # ignore dx, dy here
 
 krylov_norm2(n :: Int, x :: Vector{T}, dx :: Int) where T <: BLAS.BlasReal = BLAS.nrm2(n, x, dx)

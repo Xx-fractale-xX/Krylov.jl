@@ -118,8 +118,8 @@ function to_boundary(x :: Vector{T}, d :: Vector{T},
   return roots # `σ1` and `σ2`
 end
 
-@inline kkzeros(T, n) = CuArrays.functional() ? CuArrays.kzeros(T, n) : kzeros(T, n)
-@inline kkones(T, n) = CuArrays.functional() ? CuArrays.kones(T, n) : kones(T, n)
+@inline kzeros(T, n) = CuArrays.functional() ? CuArrays.zeros(T, n) : zeros(T, n)
+@inline kones(T, n) = CuArrays.functional() ? CuArrays.ones(T, n) : ones(T, n)
 
 # Call BLAS if possible when using dot, norm, etc.
 # Benchmarks indicate that the form BLAS.dot(n, x, 1, y, 1) is substantially faster than BLAS.dot(x, y)

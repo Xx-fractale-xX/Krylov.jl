@@ -79,8 +79,8 @@ function craigmr(A :: AbstractLinearOperator{T}, b :: AbstractVector{T};
   NisI = isa(N, opEye)
 
   # Compute y such that AAᵀy = b. Then recover x = Aᵀy.
-  x = zeros(T, n)
-  y = zeros(T, m)
+  x = kzeros(T, n)
+  y = kzeros(T, m)
   Mu = copy(b)
   u = M * Mu
   β = sqrt(@kdot(m, u, Mu))
@@ -124,7 +124,7 @@ function craigmr(A :: AbstractLinearOperator{T}, b :: AbstractVector{T};
 
   wbar = copy(u)
   @kscal!(m, one(T)/α, wbar)
-  w = zeros(T, m);
+  w = kzeros(T, m);
 
   status = "unknown";
   solved = rNorm <= ɛ_c

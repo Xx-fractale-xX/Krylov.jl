@@ -30,7 +30,7 @@ function cr(A :: AbstractLinearOperator{T}, b :: AbstractVector{T};
   verbose && @printf("CR: system of %d equations in %d variables\n", n, n)
 
   # Initial state.
-  x = zeros(T, n) # initial estimation x = 0
+  x = kzeros(T, n) # initial estimation x = 0
   xNorm = zero(T)
   r = copy(M * b) # initial residual r = M * (b - Ax) = M * b
   Ar = A * r

@@ -44,7 +44,7 @@ function cgs(A :: AbstractLinearOperator{T}, b :: AbstractVector{T};
   verbose && @printf("CGS: system of size %d\n", n)
 
   # Initial solution x₀ and residual r₀.
-  x = zeros(T, n) # x₀
+  x = kzeros(T, n) # x₀
   r = copy(b)     # r₀
   # Compute ρ₀ = ⟨ r₀,r₀ ⟩ and residual norm ‖r₀‖₂.
   ρ = @kdot(n, r, r)
@@ -61,7 +61,7 @@ function cgs(A :: AbstractLinearOperator{T}, b :: AbstractVector{T};
   # Set up workspace.
   u = copy(r)     # u₀
   p = copy(r)     # p₀
-  q = zeros(T, n) # q₋₁
+  q = kzeros(T, n) # q₋₁
 
   # Stopping criterion.
   solved = rNorm ≤ ε

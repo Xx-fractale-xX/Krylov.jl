@@ -116,7 +116,7 @@ function lslq(A :: AbstractLinearOperator{T}, b :: AbstractVector{T};
   λ² = λ * λ
   ctol = conlim > 0 ? 1/conlim : zero(T)
 
-  x_lq = zeros(T, n)    # LSLQ point
+  x_lq = kzeros(T, n)    # LSLQ point
   err_lbnds = T[]
   err_ubnds_lq = T[]
   err_ubnds_cg = T[]
@@ -126,7 +126,7 @@ function lslq(A :: AbstractLinearOperator{T}, b :: AbstractVector{T};
   Mu = copy(b)
   u = M * Mu
   β₁ = sqrt(@kdot(m, u, Mu))
-  β₁ == 0 && return (x_lq, zeros(T, n), err_lbnds, err_ubnds_lq, err_ubnds_cg,
+  β₁ == 0 && return (x_lq, kzeros(T, n), err_lbnds, err_ubnds_lq, err_ubnds_cg,
                        SimpleStats(true, false, [zero(T)], [zero(T)], "x = 0 is a zero-residual solution"))
   β = β₁
 
@@ -138,7 +138,7 @@ function lslq(A :: AbstractLinearOperator{T}, b :: AbstractVector{T};
   α = sqrt(@kdot(n, v, Nv))  # = α₁
 
   # Aᵀb = 0 so x = 0 is a minimum least-squares solution
-  α == 0 && return (x_lq, zeros(T, n), err_lbnds, err_ubnds_lq, err_ubnds_cg,
+  α == 0 && return (x_lq, kzeros(T, n), err_lbnds, err_ubnds_lq, err_ubnds_cg,
                       SimpleStats(true, false, [β₁], [zero(T)], "x = 0 is a minimum least-squares solution"))
   @kscal!(n, one(T)/α, v)
   NisI || @kscal!(n, one(T)/α, Nv)
@@ -159,7 +159,7 @@ function lslq(A :: AbstractLinearOperator{T}, b :: AbstractVector{T};
   w̄ = copy(v) # w̄₁ = v₁
 
   err_lbnd = zero(T)
-  err_vec = zeros(T, window)
+  err_vec = kzeros(T, window)
 
   # Initialize other constants.
   αL = α

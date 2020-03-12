@@ -36,7 +36,7 @@ function bilq(A :: AbstractLinearOperator{T}, b :: AbstractVector{T}; c :: Abstr
   Aᵀ = A'
 
   # Initial solution x₀ and residual norm ‖r₀‖.
-  x = zeros(T, n)
+  x = kzeros(T, n)
   bNorm = @knrm2(n, b)  # ‖r₀‖
   bNorm == 0 && return (x, SimpleStats(true, false, [bNorm], T[], "x = 0 is a zero-residual solution"))
 
@@ -55,13 +55,13 @@ function bilq(A :: AbstractLinearOperator{T}, b :: AbstractVector{T}; c :: Abstr
   # Set up workspace.
   βₖ = √(abs(bᵗc))           # β₁γ₁ = bᵀc
   γₖ = bᵗc / βₖ              # β₁γ₁ = bᵀc
-  vₖ₋₁ = zeros(T, n)         # v₀ = 0
-  uₖ₋₁ = zeros(T, n)         # u₀ = 0
+  vₖ₋₁ = kzeros(T, n)         # v₀ = 0
+  uₖ₋₁ = kzeros(T, n)         # u₀ = 0
   vₖ = b / βₖ                # v₁ = b / β₁
   uₖ = c / γₖ                # u₁ = c / γ₁
   cₖ₋₁ = cₖ = -one(T)        # Givens cosines used for the LQ factorization of Tₖ
   sₖ₋₁ = sₖ = zero(T)        # Givens sines used for the LQ factorization of Tₖ
-  d̅ = zeros(T, n)            # Last column of D̅ₖ = Vₖ(Qₖ)ᵀ
+  d̅ = kzeros(T, n)            # Last column of D̅ₖ = Vₖ(Qₖ)ᵀ
   ζₖ₋₁ = ζbarₖ = zero(T)     # ζₖ₋₁ and ζbarₖ are the last components of z̅ₖ = (L̅ₖ)⁻¹β₁e₁
   ζₖ₋₂ = ηₖ = zero(T)        # ζₖ₋₂ and ηₖ are used to update ζₖ₋₁ and ζbarₖ
   δbarₖ₋₁ = δbarₖ = zero(T)  # Coefficients of Lₖ₋₁ and L̅ₖ modified over the course of two iterations

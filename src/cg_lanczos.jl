@@ -36,7 +36,7 @@ function cg_lanczos(A :: AbstractLinearOperator{T}, b :: AbstractVector{T};
   MisI = isa(M, opEye)
 
   # Initial state.
-  x = zeros(T, n)           # x₀
+  x = kzeros(T, n)           # x₀
   Mv = copy(b)              # Mv₁ ← b
   v = M * Mv                # v₁ = M⁻¹ * Mv₁
   β = sqrt(@kdot(n, v, Mv)) # β₁ = v₁ᵀ M v₁
@@ -143,7 +143,7 @@ function cg_lanczos_shift_seq(A :: AbstractLinearOperator{T}, b :: AbstractVecto
 
   # Initial state.
   ## Distribute x similarly to shifts.
-  x = [zeros(T, n) for i = 1 : nshifts]  # x₀
+  x = [kzeros(T, n) for i = 1 : nshifts]  # x₀
   Mv = copy(b)                           # Mv₁ ← b
   v = M * Mv                             # v₁ = M⁻¹ * Mv₁
   β = sqrt(@kdot(n, v, Mv))              # β₁ = v₁ᵀ M v₁
@@ -160,13 +160,13 @@ function cg_lanczos_shift_seq(A :: AbstractLinearOperator{T}, b :: AbstractVecto
 
   # Initialize some constants used in recursions below.
   ρ = one(T)
-  σ = β * ones(T, nshifts)
-  δhat = zeros(T, nshifts)
-  ω = zeros(T, nshifts)
-  γ = ones(T, nshifts)
+  σ = β * kones(T, nshifts)
+  δhat = kzeros(T, nshifts)
+  ω = kzeros(T, nshifts)
+  γ = kones(T, nshifts)
 
   # Define stopping tolerance.
-  rNorms = β * ones(T, nshifts);
+  rNorms = β * kones(T, nshifts);
   rNorms_history = [rNorms;];
   ε = atol + rtol * β;
 

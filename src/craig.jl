@@ -78,8 +78,8 @@ function craig(A :: AbstractLinearOperator{T}, b :: AbstractVector{T};
   MisI = isa(M, opEye)
   NisI = isa(N, opEye)
 
-  x = zeros(T, n)
-  y = zeros(T, m)
+  x = kzeros(T, n)
+  y = kzeros(T, m)
   Mu = copy(b)
   u = M * Mu
   β₁ = sqrt(@kdot(m, u, Mu))
@@ -96,10 +96,10 @@ function craig(A :: AbstractLinearOperator{T}, b :: AbstractVector{T};
   @kscal!(m, one(T)/β₁, u)
   MisI || @kscal!(m, one(T)/β₁, Mu)
 
-  Nv = zeros(T, n)
-  w = zeros(T, m)  # Used to update y.
+  Nv = kzeros(T, n)
+  w = kzeros(T, m)  # Used to update y.
 
-  λ > 0 && (w2 = zeros(T, n))
+  λ > 0 && (w2 = kzeros(T, n))
 
   Anorm² = zero(T) # Estimate of ‖A‖²_F.
   Anorm  = zero(T)

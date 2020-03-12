@@ -82,7 +82,7 @@ function lsmr(A :: AbstractLinearOperator{T}, b :: AbstractVector{T};
   # If solving an SQD system, set regularization to 1.
   sqd && (λ = one(T))
   ctol = conlim > 0 ? 1/conlim : zero(T)
-  x = zeros(T, n)
+  x = kzeros(T, n)
 
   # Initialize Golub-Kahan process.
   # β₁ M u₁ = b.
@@ -129,7 +129,7 @@ function lsmr(A :: AbstractLinearOperator{T}, b :: AbstractVector{T};
 
   xENorm² = zero(T)
   err_lbnd = zero(T)
-  err_vec = zeros(T, window)
+  err_vec = kzeros(T, window)
 
   verbose && @printf("%5s  %7s  %7s  %7s  %7s  %8s  %8s  %7s\n",
                      "Aprod", "‖r‖", "‖Aᵀr‖", "β", "α", "cos", "sin", "‖A‖²")
@@ -142,7 +142,7 @@ function lsmr(A :: AbstractLinearOperator{T}, b :: AbstractVector{T};
   NisI || @kscal!(n, one(T)/α, Nv)
 
   h = copy(v)
-  hbar = zeros(T, n)
+  hbar = kzeros(T, n)
 
   iter = 0
   itmax == 0 && (itmax = m + n)

@@ -38,7 +38,7 @@ function diom(A :: AbstractLinearOperator{T}, b :: AbstractVector{T};
   verbose && @printf("DIOM: system of size %d\n", n)
 
   # Initial solution x₀ and residual r₀.
-  x = zeros(T, n) # x₀
+  x = kzeros(T, n) # x₀
   x_old = copy(x)
   r₀ = M * b      # M⁻¹(b - Ax₀)
   # Compute β.
@@ -54,13 +54,13 @@ function diom(A :: AbstractLinearOperator{T}, b :: AbstractVector{T};
 
   # Set up workspace.
   mem = min(memory, itmax) # Memory.
-  V = [zeros(T, n) for i = 1 : mem] # Preconditioned Krylov vectors, orthogonal basis for {b, M⁻¹AN⁻¹b, (M⁻¹AN⁻¹)²b, ..., (M⁻¹AN⁻¹)ᵐ⁻¹b}.
-  P = [zeros(T, n) for i = 1 : mem] # Directions for x : Pₘ = Vₘ(Uₘ)⁻¹.
-  H = zeros(T, mem+2)               # Last column of the band hessenberg matrix Hₘ = LₘUₘ.
+  V = [kzeros(T, n) for i = 1 : mem] # Preconditioned Krylov vectors, orthogonal basis for {b, M⁻¹AN⁻¹b, (M⁻¹AN⁻¹)²b, ..., (M⁻¹AN⁻¹)ᵐ⁻¹b}.
+  P = [kzeros(T, n) for i = 1 : mem] # Directions for x : Pₘ = Vₘ(Uₘ)⁻¹.
+  H = kzeros(T, mem+2)               # Last column of the band hessenberg matrix Hₘ = LₘUₘ.
   # Each column has at most mem + 1 nonzero elements. hᵢ.ₘ is stored as H[m-i+2].
   # m-i+2 represents the indice of the diagonal where hᵢ.ₘ is located.
   # In addition of that, the last column of Uₘ is stored in H.
-  L = zeros(T, mem)        # Last mem Pivots of Lₘ.
+  L = kzeros(T, mem)        # Last mem Pivots of Lₘ.
   p = BitArray(undef, mem) # Last mem permutations.
 
   # Initial ξ₁ and V₁.

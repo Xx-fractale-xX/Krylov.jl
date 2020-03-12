@@ -65,7 +65,7 @@ function crmr(A :: AbstractLinearOperator{T}, b :: AbstractVector{T};
   # Compute the adjoint of A
   Aᵀ = A'
 
-  x = zeros(T, n) # initial estimation x = 0
+  x = kzeros(T, n) # initial estimation x = 0
   r = copy(M * b) # initial residual r = M * (b - Ax) = M * b
   bNorm = @knrm2(m, r)  # norm(b - A * x0) if x0 ≠ 0.
   bNorm == 0 && return x, SimpleStats(true, false, [zero(T)], [zero(T)], "x = 0 is a zero-residual solution");

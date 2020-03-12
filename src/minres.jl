@@ -55,7 +55,7 @@ function minres(A :: AbstractLinearOperator{T}, b :: AbstractVector{T};
   verbose && @printf("MINRES: system of size %d\n", n)
 
   ϵM = eps(T)
-  x = zeros(T, n)
+  x = kzeros(T, n)
   ctol = conlim > 0 ? 1 / conlim : zero(T)
 
   # Initialize Lanczos process.
@@ -80,8 +80,8 @@ function minres(A :: AbstractLinearOperator{T}, b :: AbstractVector{T};
   γmin = T(Inf)
   cs = -one(T)
   sn = zero(T)
-  w1 = zeros(T, n)
-  w2 = zeros(T, n)
+  w1 = kzeros(T, n)
+  w2 = kzeros(T, n)
   r2 = copy(r1)
 
   ANorm² = zero(T)
@@ -93,7 +93,7 @@ function minres(A :: AbstractLinearOperator{T}, b :: AbstractVector{T};
 
   xENorm² = zero(T)
   err_lbnd = zero(T)
-  err_vec = zeros(T, window)
+  err_vec = kzeros(T, window)
 
   verbose && @printf("%5s  %7s  %7s  %7s  %8s  %8s  %7s  %7s\n",
                      "Aprod", "‖r‖", "‖Aᵀr‖", "β", "cos", "sin", "‖A‖", "κ(A)")

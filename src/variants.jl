@@ -3,8 +3,8 @@ using LinearAlgebra
 # Define a generic linear operator with preallocation
 function preallocated_LinearOperator(A :: AbstractMatrix, T)
   (n, m) = size(A)
-  Ap = zeros(T, n)
-  Atq = zeros(T, m)
+  Ap = kzeros(T, n)
+  Atq = kzeros(T, m)
   return LinearOperator(T, n, m, false, false, p -> mul!(Ap, A, p),
                         q -> mul!(Atq, transpose(A), q), q -> mul!(Atq, transpose(A), q))
 end
@@ -56,7 +56,7 @@ end
 # Define a symmetric linear operator with preallocation
 function preallocated_symmetric_LinearOperator(A :: AbstractMatrix, T)
   (n, m) = size(A)
-  Ap = zeros(T, n)
+  Ap = kzeros(T, n)
   return LinearOperator(T, n, m, true, true, p -> mul!(Ap, A, p))
 end
 

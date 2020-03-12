@@ -41,7 +41,7 @@ function qmr(A :: AbstractLinearOperator{T}, b :: AbstractVector{T}; c :: Abstra
   Aᵀ = A'
 
   # Initial solution x₀ and residual norm ‖r₀‖.
-  x = zeros(T, n)
+  x = kzeros(T, n)
   rNorm = @knrm2(n, b)  # rNorm = ‖r₀‖
   rNorm == 0 && return (x, SimpleStats(true, false, [rNorm], T[], "x = 0 is a zero-residual solution"))
 
@@ -60,14 +60,14 @@ function qmr(A :: AbstractLinearOperator{T}, b :: AbstractVector{T}; c :: Abstra
   # Set up uorkspace.
   βₖ = √(abs(bᵗc))            # β₁γ₁ = bᵀc
   γₖ = bᵗc / βₖ               # β₁γ₁ = bᵀc
-  vₖ₋₁ = zeros(T, n)          # v₀ = 0
-  uₖ₋₁ = zeros(T, n)          # u₀ = 0
+  vₖ₋₁ = kzeros(T, n)          # v₀ = 0
+  uₖ₋₁ = kzeros(T, n)          # u₀ = 0
   vₖ = b / βₖ                 # v₁ = b / β₁
   uₖ = c / γₖ                 # u₁ = c / γ₁
   cₖ₋₂ = cₖ₋₁ = cₖ = zero(T)  # Givens cosines used for the QR factorization of Tₖ₊₁.ₖ
   sₖ₋₂ = sₖ₋₁ = sₖ = zero(T)  # Givens sines used for the QR factorization of Tₖ₊₁.ₖ
-  wₖ₋₂ = zeros(T, n)          # Column k-2 of Wₖ = Vₖ(Rₖ)⁻¹
-  wₖ₋₁ = zeros(T, n)          # Column k-1 of Wₖ = Vₖ(Rₖ)⁻¹
+  wₖ₋₂ = kzeros(T, n)          # Column k-2 of Wₖ = Vₖ(Rₖ)⁻¹
+  wₖ₋₁ = kzeros(T, n)          # Column k-1 of Wₖ = Vₖ(Rₖ)⁻¹
   ζbarₖ = βₖ                  # ζbarₖ is the last component of z̅ₖ = (Qₖ)ᵀβ₁e₁
   τₖ = @kdot(n, vₖ, vₖ)       # τₖ is used for the residual norm estimate
 

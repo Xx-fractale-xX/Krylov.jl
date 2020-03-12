@@ -66,7 +66,7 @@ function cgne(A :: AbstractLinearOperator{T}, b :: AbstractVector{T};
   # Compute the adjoint of A
   Aᵀ = A'
 
-  x = zeros(T, n);
+  x = kzeros(T, n);
   r = copy(b)
   z = M * r
   rNorm = @knrm2(m, r)   # Marginally faster than norm(r)

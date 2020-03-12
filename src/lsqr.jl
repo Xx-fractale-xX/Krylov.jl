@@ -83,7 +83,7 @@ function lsqr(A :: AbstractLinearOperator{T}, b :: AbstractVector{T};
   sqd && (λ = one(T))
   λ² = λ * λ
   ctol = conlim > 0 ? 1/conlim : zero(T)
-  x = zeros(T, n)
+  x = kzeros(T, n)
 
   # Initialize Golub-Kahan process.
   # β₁ M u₁ = b.
@@ -111,7 +111,7 @@ function lsqr(A :: AbstractLinearOperator{T}, b :: AbstractVector{T};
 
   xENorm² = zero(T)
   err_lbnd = zero(T)
-  err_vec = zeros(T, window)
+  err_vec = kzeros(T, window)
 
   verbose && @printf("%5s  %7s  %7s  %7s  %7s  %7s  %7s  %7s  %7s\n",
                      "Aprod", "α", "β", "‖r‖", "‖Aᵀr‖", "compat", "backwrd", "‖A‖", "κ(A)")

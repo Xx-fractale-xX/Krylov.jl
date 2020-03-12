@@ -36,7 +36,7 @@ function dqgmres(A :: AbstractLinearOperator{T}, b :: AbstractVector{T};
   verbose && @printf("DQGMRES: system of size %d\n", n)
 
   # Initial solution x₀ and residual r₀.
-  x = zeros(T, n) # x₀
+  x = kzeros(T, n) # x₀
   r₀ = M * b      # M⁻¹(b - Ax₀)
   # Compute β
   rNorm = @knrm2(n, r₀) # β = ‖r₀‖₂
@@ -51,11 +51,11 @@ function dqgmres(A :: AbstractLinearOperator{T}, b :: AbstractVector{T};
 
   # Set up workspace.
   mem = min(memory, itmax) # Memory.
-  V = [zeros(T, n) for i = 1 : mem] # Preconditioned Krylov vectors, orthogonal basis for {b, M⁻¹AN⁻¹b, (M⁻¹AN⁻¹)²b, ..., (M⁻¹AN⁻¹)ᵐ⁻¹b}.
-  P = [zeros(T, n) for i = 1 : mem] # Directions for x : Pₘ = Vₘ(Rₘ)⁻¹.
-  s = zeros(T, mem)                 # Last mem Givens sines used for the factorization QₘRₘ = Hₘ.
-  c = zeros(T, mem)                 # Last mem Givens cosines used for the factorization QₘRₘ = Hₘ.
-  H = zeros(T, mem+2)               # Last column of the band hessenberg matrix Hₘ.
+  V = [kzeros(T, n) for i = 1 : mem] # Preconditioned Krylov vectors, orthogonal basis for {b, M⁻¹AN⁻¹b, (M⁻¹AN⁻¹)²b, ..., (M⁻¹AN⁻¹)ᵐ⁻¹b}.
+  P = [kzeros(T, n) for i = 1 : mem] # Directions for x : Pₘ = Vₘ(Rₘ)⁻¹.
+  s = kzeros(T, mem)                 # Last mem Givens sines used for the factorization QₘRₘ = Hₘ.
+  c = kzeros(T, mem)                 # Last mem Givens cosines used for the factorization QₘRₘ = Hₘ.
+  H = kzeros(T, mem+2)               # Last column of the band hessenberg matrix Hₘ.
   # Each column has at most mem + 1 nonzero elements. hᵢ.ₘ is stored as H[m-i+2].
   # m-i+2 represents the indice of the diagonal where hᵢ.ₘ is located.
   # In addition of that, the last column of Rₘ is also stored in H.

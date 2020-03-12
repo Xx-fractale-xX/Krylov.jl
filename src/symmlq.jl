@@ -7,7 +7,7 @@
 # C. C. Paige and M. A. Saunders, Solution of Sparse Indefinite Systems
 # of Linear Equations, SIAM Journal on Numerical Analysis, 12(4), 617-629, 1975.
 #
-# Ron Estrin, <ronestrin756@gmail.com>
+# Ron Estrin, <rkonestrin756@gmail.com>
 
 export symmlq
 
@@ -41,7 +41,7 @@ function symmlq(A :: AbstractLinearOperator{T}, b :: AbstractVector{T};
   MisI = isa(M, opEye)
 
   ϵM = eps(T)
-  x = zeros(T, n)
+  x = kzeros(T, n)
   ctol = conlim > 0 ? 1 / conlim : zero(T)
 
   # Initialize Lanczos process.
@@ -103,9 +103,9 @@ function symmlq(A :: AbstractLinearOperator{T}, b :: AbstractVector{T};
   err = T(Inf)
   errcg = T(Inf)
 
-  clist = zeros(T, window)
-  zlist = zeros(T, window)
-  sprod = ones(T, window)
+  clist = kzeros(T, window)
+  zlist = kzeros(T, window)
+  sprod = kones(T, window)
 
   if λest ≠ 0
     # Start QR factorization of Tₖ - λest I

@@ -30,7 +30,7 @@ function cg(A :: AbstractLinearOperator{T}, b :: AbstractVector{T};
   verbose && @printf("CG: system of %d equations in %d variables\n", n, n);
 
   # Initial state.
-  x = zeros(T, n);
+  x = kzeros(T, n);
   r = copy(b)
   z = M * r
   p = copy(z)

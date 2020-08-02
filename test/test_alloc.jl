@@ -135,9 +135,9 @@ actual_bicgstab_bytes = @allocated bicgstab(A, b)
 @test actual_bicgstab_bytes ≤ 1.1 * expected_bicgstab_bytes
 
 # with (Ap, Aᵀq) preallocated, CRAIGMR needs:
-# - 2 n-vector: x, v
+# - 3 n-vector: x, v, d
 # - 4 m-vectors: y, u, w, wbar
-storage_craigmr(n, m) = 2 * n + 4 * m
+storage_craigmr(n, m) = 3 * n + 4 * m
 storage_craigmr_bytes(n, m) = 8 * storage_craigmr(n, m)
 
 expected_craigmr_bytes = storage_craigmr_bytes(n, m)

@@ -83,16 +83,52 @@ function test_craigmr()
   @test y == zeros(size(A,1))
   @test stats.status == "x = 0 is a zero-residual solution"
 
+  # Test regularization
+  A, b, λ = regularization()
+  (x, y, stats) = craigmr(A, b, λ=λ)
+  s = λ * y
+  r = b - (A * x + λ * s)
+  resid = norm(r) / norm(b)
+  @printf("CRAIGMR: Relative residual: %8.1e\n", resid)
+  @test(resid ≤ craigmr_tol)
+  r2 = b - (A * A' + λ^2 * I) * y
+  resid2 = norm(r2) / norm(b)
+  @test(resid2 ≤ craigmr_tol)
+
+  # Test saddle-point systems
+  A, b, D = saddle_point()
+  D⁻¹ = inv(D)
+  (x, y, stats) = craigmr(A, b, N=D⁻¹)
+  r = b - A * x
+  resid = norm(r) / norm(b)
+  @printf("CRAIGMR: Relative residual: %8.1e\n", resid)
+  @test(resid ≤ craigmr_tol)
+  r2 = b - (A * D⁻¹ * A') * y
+  resid2 = norm(r2) / norm(b)
+  @test(resid2 ≤ craigmr_tol)
+
   # Test with preconditioners
-  A, b, M, N = two_preconditioners()
-  (x, y, stats) = craigmr(A, b, M=M, N=N)
+  A, b, M⁻¹, N⁻¹ = two_preconditioners()
+  (x, y, stats) = craigmr(A, b, M=M⁻¹, N=N⁻¹, sqd=false)
   show(stats)
   r = b - A * x
-  resid = sqrt(dot(r, M * r)) / norm(b)
+  resid = sqrt(dot(r, M⁻¹ * r)) / norm(b)
   @printf("CRAIGMR: Relative residual: %8.1e\n", resid)
-  @test(norm(x - N * A' * y) ≤ craigmr_tol * norm(x))
   @test(resid ≤ craigmr_tol)
-  @test(stats.solved)
+  @test(norm(x - N⁻¹ * A' * y) ≤ craigmr_tol * norm(x))
+
+  # Test symmetric and quasi-definite systems
+  A, b, M, N = sqd()
+  M⁻¹ = inv(M)
+  N⁻¹ = inv(N)
+  (x, y, stats) = craigmr(A, b, M=M⁻¹, N=N⁻¹, sqd=true)
+  r = b - (A * x + M * y)
+  resid = norm(r) / norm(b)
+  @printf("CRAIGMR: Relative residual: %8.1e\n", resid)
+  @test(resid ≤ craigmr_tol)
+  r2 = b - (A * N⁻¹ * A' + M) * y
+  resid2 = norm(r2) / norm(b)
+  @test(resid2 ≤ craigmr_tol)
 end
 
 test_craigmr()

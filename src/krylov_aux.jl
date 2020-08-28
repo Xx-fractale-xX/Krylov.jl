@@ -1,4 +1,6 @@
 """
+    (c, s, ρ) = sym_givens(a, b)
+
 Numerically stable symmetric Givens reflection.
 Given `a` and `b`, return `(c, s, ρ)` such that
 
@@ -43,6 +45,8 @@ end
 
 
 """
+    roots = roots_quadratic(q₂, q₁, q₀; nitref)
+
 Find the real roots of the quadratic
 
     q(x) = q₂ x² + q₁ x + q₀,
@@ -92,6 +96,8 @@ end
 
 
 """
+    roots = to_boundary(x, d, radius; flip, xNorm2, dNorm2)
+
 Given a trust-region radius `radius`, a vector `x` lying inside the
 trust-region and a direction `d`, return `σ1` and `σ2` such that
 

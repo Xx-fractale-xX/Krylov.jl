@@ -36,7 +36,7 @@ Solve the consistent linear system
 
     Ax + λs = b
 
-using the CRAIG-MR method, where λ ≥ 0 is a regularization parameter.
+using the CRAIGMR method, where λ ≥ 0 is a regularization parameter.
 This method is equivalent to applying the Conjugate Residuals method
 to the normal equations of the second kind
 
@@ -50,21 +50,21 @@ When λ > 0, this method solves the problem
 
     min ‖(x,s)‖₂  s.t.  Ax + λs = b.
 
-Preconditioners M⁻¹ and N⁻¹ may be provided in the form of linear operators and are
-assumed to be symmetric and positive definite.
 If `sqd = true`, CRAIGMR solves the symmetric and quasi-definite system
 
-    [ -N   Aᵀ ] [ x ]   [ 0 ]
-    [  A   M  ] [ y ] = [ b ],
+    [ -F   Aᵀ ] [ x ]   [ 0 ]
+    [  A   E  ] [ y ] = [ b ],
 
-which is equivalent to applying MINRES to `(AN⁻¹Aᵀ + M)y = b` with `Nx = Aᵀy`.
+where E and F are symmetric and positive definite.
+CRAIGMR is then equivalent to applying MINRES to `(AF⁻¹Aᵀ + E)y = b` with `Fx = Aᵀy`.
+Preconditioners M = E⁻¹ ≻ 0 and N = F⁻¹ ≻ 0 may be provided in the form of linear operators.
 
 If `sqd = false`, CRAIGMR solves the symmetric and indefinite system
 
-    [ -N   Aᵀ ] [ x ]   [ 0 ]
+    [ -F   Aᵀ ] [ x ]   [ 0 ]
     [  A   0  ] [ y ] = [ b ].
 
-In this case, M⁻¹ can still be specified and indicates the weighted norm in which residuals are measured.
+In this case, M can still be specified and indicates the weighted norm in which residuals are measured.
 
 CRAIGMR produces monotonic residuals ‖r‖₂.
 It is formally equivalent to CRMR, though can be slightly more accurate,

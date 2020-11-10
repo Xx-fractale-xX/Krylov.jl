@@ -38,7 +38,7 @@ function test_bicgstab()
   @test(stats.solved)
 
   # Code coverage.
-  (x, stats) = bicgstab(Matrix(A), b, verbose=true)
+  (x, stats) = bicgstab(Matrix(A), b, verbose=true, stats=false)
   show(stats)
 
   # Sparse Laplacian.
@@ -67,7 +67,7 @@ function test_bicgstab()
 
   # Left preconditioning
   A, b, M = square_preconditioned()
-  (x, stats) = bicgstab(A, b, M=M)
+  (x, stats) = bicgstab(A, b, M=M, stats=true)
   show(stats)
   r = b - A * x
   resid = norm(r) / norm(b)
@@ -77,7 +77,7 @@ function test_bicgstab()
 
   # Right preconditioning
   A, b, N = square_preconditioned()
-  (x, stats) = bicgstab(A, b, N=N)
+  (x, stats) = bicgstab(A, b, N=N, stats=true)
   show(stats)
   r = b - A * x
   resid = norm(r) / norm(b)
@@ -87,7 +87,7 @@ function test_bicgstab()
 
   # Split preconditioning
   A, b, M, N = two_preconditioners(500, 32)
-  (x, stats) = bicgstab(A, b, M=M, N=N)
+  (x, stats) = bicgstab(A, b, M=M, N=N, stats=true)
   show(stats)
   r = b - A * x
   resid = norm(r) / norm(b)

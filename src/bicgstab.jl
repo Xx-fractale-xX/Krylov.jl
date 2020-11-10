@@ -35,7 +35,7 @@ This implementation allows a left preconditioner `M` and a right preconditioner 
 """
 function bicgstab(A, b :: AbstractVector{T}; c :: AbstractVector{T}=b,
                    M=opEye(), N=opEye(), atol :: T=√eps(T), rtol :: T=√eps(T),
-                   itmax :: Int=0, verbose :: Bool=false) where T <: AbstractFloat
+                   itmax :: Int=0, stats :: Bool=false, verbose :: Bool=false) where T <: AbstractFloat
 
   n, m = size(A)
   m == n || error("System must be square")
@@ -54,6 +54,10 @@ function bicgstab(A, b :: AbstractVector{T}; c :: AbstractVector{T}=b,
   # Determine the storage type of b
   S = typeof(b)
 
+  # Store residual norms and Aᵀ-residual norms
+  rNorms = (stats ? T[] : nothing)
+  AᵀrNorms = (stats ? T[] : nothing)
+
   # Set up workspace.
   x = kzeros(S, n)  # x₀
   s = kzeros(S, n)  # s₀
@@ -67,18 +71,18 @@ function bicgstab(A, b :: AbstractVector{T}; c :: AbstractVector{T}=b,
 
   # Compute residual norm ‖r₀‖₂.
   rNorm = @knrm2(n, r)
-  rNorm == 0 && return (x, SimpleStats(true, false, [rNorm], T[], "x = 0 is a zero-residual solution"))
+  stats && push!(rNorms, rNorm)
+  rNorm == 0 && return (x, SimpleStats{T}(true, false, rNorms, AᵀrNorms, "x = 0 is a zero-residual solution"))
 
   iter = 0
   itmax == 0 && (itmax = 2*n)
 
-  rNorms = [rNorm;]
   ε = atol + rtol * rNorm
   verbose && @printf("%5s  %7s  %8s  %8s\n", "k", "‖rₖ‖", "αₖ", "ωₖ")
   verbose && @printf("%5d  %7.1e  %8.1e  %8.1e\n", iter, rNorm, α, ω)
 
   next_ρ = @kdot(n, r, c)  # ρ₁ = ⟨r₀,r̅₀⟩
-  next_ρ == 0 && return (x, SimpleStats(false, false, [rNorm], T[], "Breakdown bᵀc = 0"))
+  next_ρ == 0 && return (x, SimpleStats{T}(false, false, rNorms, AᵀrNorms, "Breakdown bᵀc = 0"))
 
   # Stopping criterion.
   solved = rNorm ≤ ε
@@ -110,7 +114,7 @@ function bicgstab(A, b :: AbstractVector{T}; c :: AbstractVector{T}=b,
 
     # Compute residual norm ‖rₖ‖₂.
     rNorm = @knrm2(n, r)
-    push!(rNorms, rNorm)
+    stats && push!(rNorms, rNorm)
 
     # Update stopping criterion.
     solved = rNorm ≤ ε
@@ -121,6 +125,6 @@ function bicgstab(A, b :: AbstractVector{T}; c :: AbstractVector{T}=b,
   verbose && @printf("\n")
 
   status = tired ? "maximum number of iterations exceeded" : (breakdown ? "breakdown αₖ == 0" : "solution good enough given atol and rtol")
-  stats = SimpleStats(solved, false, rNorms, T[], status)
+  stats = SimpleStats{T}(solved, false, rNorms, AᵀrNorms, status)
   return (x, stats)
 end

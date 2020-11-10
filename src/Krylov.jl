@@ -16,8 +16,8 @@ Type for statistics returned by the majority of Krylov solvers, the attributes a
 mutable struct SimpleStats{T} <: KrylovStats{T}
   solved :: Bool
   inconsistent :: Bool
-  residuals :: Vector{T}
-  Aresiduals :: Vector{T}
+  residuals :: Union{Vector{T}, Nothing}
+  Aresiduals :: Union{Vector{T}, Nothing}
   status :: String
 end
 

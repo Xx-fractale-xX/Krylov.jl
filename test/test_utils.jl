@@ -3,8 +3,8 @@ include("gen_lsq.jl")
 include("check_min_norm.jl")
 
 # Symmetric and positive definite systems.
-function symmetric_definite(n :: Int=10)
-  A = spdiagm(-1 => ones(n-1), 0 => 4*ones(n), 1 => ones(n-1))
+function symmetric_definite(T=Float64, n :: Int=10)
+  A = spdiagm(-1 => ones(T, n-1), 0 => 4*ones(T, n), 1 => ones(T, n-1))
   b = A * [1:n;]
   return A, b
 end

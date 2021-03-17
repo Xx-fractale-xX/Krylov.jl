@@ -350,7 +350,7 @@ function CgsSolver(A, b)
   return CgsSolver{T,S}(x, r, u, p, q)
 end
 
-mutable struct BicgstabSolver{T,S} <: KrylovSolver{T,S}
+struct BicgstabSolver{T,S} <: KrylovSolver{T,S}
   x :: S
   r :: S
   p :: S

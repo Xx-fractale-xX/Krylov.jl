@@ -134,6 +134,9 @@ bicgstab(A, b)  # warmup
 actual_bicgstab_bytes = @allocated bicgstab(A, b)
 @test actual_bicgstab_bytes ≤ 1.1 * expected_bicgstab_bytes
 
+solver = Krylov.BicgstabSolver(A, b)
+inplace_bytes = @allocated Krylov.bicgstab!(solver, A, b)
+
 # with (Ap, Aᵀq) preallocated, CRAIGMR needs:
 # - 2 n-vector: x, v
 # - 4 m-vectors: y, u, w, wbar
